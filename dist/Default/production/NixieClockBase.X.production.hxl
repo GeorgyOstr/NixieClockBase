@@ -2,11 +2,13 @@
 ### Memory Usage ###
  Unused memory ranges:
   2h - 7h
-  34h - 3Fh
+  34h - 400Dh
+  4010h - 403Fh
   
  dist/Default/production\NixieClockBase.X.production.hex ranges:
   0h - 1h
   8h - 33h
+  400Eh - 400Fh
   
 ### Hex Memory Map ###
  Legend:
@@ -21,3 +23,4 @@
   X = Find & delete opcode
   1 = dist/Default/production\NixieClockBase.X.production.hex
 00000000: 11------11111111111111111111111111111111111111111111------------
+00004000: --------------11------------------------------------------------
