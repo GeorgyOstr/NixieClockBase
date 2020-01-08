@@ -1,0 +1,23 @@
+### HEXMate logfile and output summary ###
+### Memory Usage ###
+ Unused memory ranges:
+  2h - 7h
+  34h - 3Fh
+  
+ dist/Default/production\NixieClockBase.X.production.hex ranges:
+  0h - 1h
+  8h - 33h
+  
+### Hex Memory Map ###
+ Legend:
+  - = Unused memory
+  F = Filled ROM
+  S = Stored serial code
+  A = Stored ASCII string
+  R = Reserved for checksum
+  C = Stored checksum result
+  T = Trailing code
+  & = Find & replace opcode
+  X = Find & delete opcode
+  1 = dist/Default/production\NixieClockBase.X.production.hex
+00000000: 11------11111111111111111111111111111111111111111111------------
