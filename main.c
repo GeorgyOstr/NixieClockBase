@@ -30,18 +30,20 @@ void pwm()
 
 void timer()
 {
-    T1CKPS1 =1;
-    T1CKPS0 =1;
-    T1OSCEN =1;
-    TMR1CS  =1;
-    nT1SYNC =1;
-    TMR1ON  =1;
-    
+    T1CKPS1 = 1;
+    T1CKPS0 = 1;
+    T1OSCEN = 1;
+    TMR1CS  = 0;
+    nT1SYNC = 1;
+    TMR1ON  = 1;  
+    TMR1H = 0; 
+    TMR1L = 0; 
+    PIR1bits.TMR1IF = 0; 
+    PIE1bits.TMR1IE = 0;        /* Disable TIMER1 interrupt  */ 
 }
 
 void main(void)
 {
-
     ConfigureOscillator();
     pwm();
     InitApp();
@@ -56,14 +58,16 @@ void main(void)
 
     while(1)
     {
+        //TIME COUNTING
         tmr_now = TMR1H / 16;
         if((tmr_now-tmr_prev) != 0)
         {
             time = incrementTime(time, second);
         }
         tmr_prev = tmr_now;
-        showNumber(100*time.hours+time.minutes,1);
+        //TIME COUNTING
+        
+        showNumber(time.hours*100+time.minutes, 100);
     }
-
 }
 
