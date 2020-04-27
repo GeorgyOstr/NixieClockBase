@@ -3,8 +3,8 @@
 #define pinA  RA2 
 #define pinB  RA7
 #define pinC  RA0
-#define pinD  RA6
-
+#define pinD  RA6 
+    
 #define l0 RB4
 #define l1 RB5
 #define l2 RB0

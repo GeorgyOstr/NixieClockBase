@@ -1,5 +1,6 @@
 struct Time
 {
+    unsigned char sixteenth;
     unsigned char seconds;
     unsigned char minutes;
     unsigned char hours;
@@ -42,24 +43,31 @@ unsigned char daysInMonth(struct Time time)
 
 struct Time incrementTime(struct Time time, struct Time increment)
 {   
-    time.seconds += increment.seconds;
+    time.sixteenth += increment.sixteenth;
+    
+    if (time.sixteenth>15)
+    {
+        time.sixteenth=0;
+        time.seconds+=1;
+    }
+    
     if (time.seconds>59)
     {
-        time.seconds-=60;
+        time.seconds=0;
         time.minutes+=1;
     }
 
     time.minutes += increment.minutes;
     if (time.minutes>59)
     {
-        time.minutes-=60;
+        time.minutes=0;
         time.hours+=1;
     }
 
     time.hours += increment.hours;
     if (time.hours>23)
     {
-        time.hours-=24;
+        time.hours=0;
         time.weekday+=1;
         time.date+=1;
     }
@@ -74,13 +82,13 @@ struct Time incrementTime(struct Time time, struct Time increment)
     }
     if (time.weekday>6)
     {
-        time.weekday-=7;
+        time.weekday=0;
     }
 
     time.month += increment.month;
     if(time.month>12)
     {
-        time.month-=12;
+        time.month=0;
         time.year+=1;
     }
  

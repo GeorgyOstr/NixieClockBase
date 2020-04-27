@@ -16,6 +16,12 @@
 #include "TimeLib.h"
 #include "LightLib.h"
 
+
+#define AllButtons RA5
+#define RButton RA6 
+#define MButton RA7 
+#define LButton RA0
+
 void pwm()
 {
     //PR2 = 0b00110001 ;
@@ -33,13 +39,16 @@ void timer()
     T1CKPS1 = 1;
     T1CKPS0 = 1;
     T1OSCEN = 1;
-    TMR1CS  = 0;
+    TMR1CS  = 1;
     nT1SYNC = 1;
-    TMR1ON  = 1;  
-    TMR1H = 0; 
-    TMR1L = 0; 
-    PIR1bits.TMR1IF = 0; 
-    PIE1bits.TMR1IE = 0;        /* Disable TIMER1 interrupt  */ 
+    TMR1ON  = 1; 
+    TMR1H   = 0; 
+    TMR1L   = 0;
+    /* Disable TIMER1 interrupt  */ 
+    CCP1IF  = 0;
+    CCP1IE  = 0;
+    TMR1IF  = 0; 
+    TMR1IE  = 0; 
 }
 
 void main(void)
@@ -47,27 +56,43 @@ void main(void)
     ConfigureOscillator();
     pwm();
     InitApp();
+    __delay_us(1000);
     timer();
     
-    struct Time time={0,50,22,0,0,0,0};
-    struct Time second={1,0,0,0,0,0,0};
+    struct Time time={0,0,50,22,0,0,0,0};
+    struct Time sixteenth={1,0,0,0,0,0,0,0};
     
     l4 = 1;
-    unsigned int tmr_prev = TMR1H / 16;
-    unsigned int tmr_now = TMR1H / 16;
-
+    unsigned int tmr_prev = TMR1H;
+    unsigned int tmr_now = TMR1H;
+    unsigned char count16 = 0;
+    unsigned int out = 0;
     while(1)
     {
         //TIME COUNTING
-        tmr_now = TMR1H / 16;
+        tmr_now = TMR1H;
         if((tmr_now-tmr_prev) != 0)
         {
-            time = incrementTime(time, second);
+
+            time = incrementTime(time, sixteenth);
         }
         tmr_prev = tmr_now;
         //TIME COUNTING
         
-        showNumber(time.hours*100+time.minutes, 100);
+        //Buttons
+        bool tmp = 0;
+        AllButtons = !RButton;
+        if(RButton == AllButtons)
+        {
+            out = 0;
+        }
+        else
+        {
+        //Buttons
+            out = time.hours*100 + time.minutes;
+            out = time.minutes*100 + time.seconds;
+        }
+        showNumber(out, 1);
     }
 }
 
