@@ -43,7 +43,7 @@ void delayOn()
 
 void delayOff()
 {
-    __delay_us(10);
+    __delay_us(1);
 }
 
 void buttons()
@@ -90,14 +90,10 @@ void light(int lamp, int number)
     }
 }
 
-void showNumber(long number, int time)
+void showNumber(long number)
 {
-    for(int i=0; i < time; i++)
-    {
         light(3, number/1000%10);
-        buttons();
         light(2, number/100%10);
         light(1, number/10%10);
         light(0, number%10);
-    }
 }
