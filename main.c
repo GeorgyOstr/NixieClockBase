@@ -16,12 +16,6 @@
 #include "TimeLib.h"
 #include "LightLib.h"
 
-
-#define AllButtons RA5
-#define RButton RA6 
-#define MButton RA7 
-#define LButton RA0
-
 void pwm()
 {
     //PR2 = 0b00110001 ;
@@ -78,20 +72,24 @@ void main(void)
         }
         tmr_prev = tmr_now;
         //TIME COUNTING
+        out = time.hours*100 + time.minutes;
+        out = time.minutes*100 + time.seconds;
         
-        //Buttons
-        bool tmp = 0;
-        AllButtons = !RButton;
-        if(RButton == AllButtons)
+        if (RPressed)
+        {
+            out = 2222;
+        }
+        if (LPressed)
+        {
+            out = 4444;
+        }
+        if (MPressed)
         {
             out = 0;
         }
-        else
-        {
-        //Buttons
-            out = time.hours*100 + time.minutes;
-            out = time.minutes*100 + time.seconds;
-        }
+        
+        
+        
         showNumber(out, 1);
     }
 }

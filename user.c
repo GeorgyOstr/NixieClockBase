@@ -25,7 +25,6 @@ void InitApp(void)
     TRISA5=1;
     TRISA4=1;
     TRISA1=1;
-    TRISA2=0;
     //Disable damn reference
     VREN=0; VROE=0; VRR=0; VR0=1; VR1=1; VR2=1; VR3=1;
     //Damn comporators
